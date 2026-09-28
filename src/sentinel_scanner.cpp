@@ -1,3 +1,8 @@
+//Credit to Stack Overflow for resources for help while doing this project.
+
+
+
+
 #include "core/sentinel_scanner.h"
 
 SentinelScanner::SentinelScanner(std::string sentinel) 
