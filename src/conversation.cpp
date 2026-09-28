@@ -1,3 +1,6 @@
+//Credit to Stack Overflow for resources for help with some stuff. Wow!
+//
+
 #include "core/conversation.h"
 #include <stdexcept>
 
