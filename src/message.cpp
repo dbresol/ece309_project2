@@ -1,7 +1,7 @@
 #include "core/message.h"
 #include <utility>
 
-// Default-constructs an empty System message with empty content.
+//default constructor...
 Message::Message() : role_(Role::System), content_("") {}
 
 Message::Message(Role role, std::string content) 
