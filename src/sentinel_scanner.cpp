@@ -7,35 +7,35 @@ SentinelScanner::Out SentinelScanner::feed(std::string_view chunk) {
     Out result;
     result.sentinel_found = false;
     
-    // Combine existing pending characters with the incoming chunk
+    //add new chunk to pending_
     pending_ += chunk;
     
-    // Check if the sentinel is fully present in this combined text
+    //find location of sentinel if it is there
     std::size_t found_pos = pending_.find(sentinel_);
     
     if (found_pos != std::string::npos) {
-        // Sentinel found: everything before it is safe
+        //if sentinel is found, everything before is good
         result.safe_text = pending_.substr(0, found_pos);
         result.sentinel_found = true;
         pending_.clear(); 
     } else {
-        // Sentinel not found: hold back the maximum possible partial match length
+        // if sentinel is not found, hold back the maximum possible match length
         std::size_t max_hold_back = sentinel_.size() - 1;
         
         if (pending_.size() > max_hold_back) {
             std::size_t safe_length = pending_.size() - max_hold_back;
             result.safe_text = pending_.substr(0, safe_length);
-            // Retain only the trailing characters that might form a sentinel with the next chunk
+            //keep only trailing chars
             pending_ = pending_.substr(safe_length);
         }
-        // If pending_ is shorter than max_hold_back, safe_text remains empty.
+        //if pending is less than the limit at max_hold_back, safe_text is still empty
     }
     
     return result;
 }
 
 SentinelScanner::Out SentinelScanner::flush() {
-    // Release any text still held back after the stream ends
+    //release any text left after everything else is done
     Out result;
     result.safe_text = pending_;
     result.sentinel_found = false;
