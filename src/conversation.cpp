@@ -21,10 +21,10 @@ Conversation::Conversation(const Conversation& other) : size_(other.size_), capa
 Conversation& Conversation::operator=(const Conversation& other) //copy assignment
 {
     if (this != &other) {
-        // Free existing memory
+        //free memory!
         delete[] data_;
         
-        // Deep copy from 'other'
+        //deep copy
         size_ = other.size_;
         capacity_ = other.capacity_;
         
@@ -51,15 +51,15 @@ Conversation::Conversation(Conversation&& other) noexcept : data_(other.data_), 
 Conversation& Conversation::operator=(Conversation&& other) noexcept //move asignment
 {
     if (this != &other) {
-        // Free existing memory
+        //free memory!
         delete[] data_;
         
-        // Steal memory
+        //steal memory
         data_ = other.data_;
         size_ = other.size_;
         capacity_ = other.capacity_;
         
-        // Zero out the source
+        //remove old data
         other.data_ = nullptr;
         other.size_ = 0;
         other.capacity_ = 0;
@@ -69,24 +69,24 @@ Conversation& Conversation::operator=(Conversation&& other) noexcept //move asig
 
 void Conversation::append(Message m) {
     if (size_ == capacity_) {
-        // Determine new capacity (e.g., double it, or start at 1 if currently 0)
+        //get new capacity
         std::size_t new_capacity = (capacity_ == 0) ? 1 : capacity_ * 2;
         
-        // Allocate new array
+        //allocate new array
         Message* new_data = new Message[new_capacity];
         
-        // Copy existing elements to the new array
+        //copy old elements to new array
         for (std::size_t i = 0; i < size_; ++i) {
             new_data[i] = data_[i];
         }
         
-        // Delete the old array and update members
+        //delete old array
         delete[] data_;
         data_ = new_data;
         capacity_ = new_capacity;
     }
     
-    // Insert the new message
+    //insert message
     data_[size_] = m;
     size_++;
 }
