@@ -1,4 +1,4 @@
-#ifndef CORE_MESSAGE_H
+#ifndef CORE_MESSAGE_H //this is to prevent errors with "multiple declarations"
 #define CORE_MESSAGE_H
 
 #include <string>

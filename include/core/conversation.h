@@ -1,4 +1,4 @@
-#ifndef CORE_CONVERSATION_H
+#ifndef CORE_CONVERSATION_H //this is to prevent errors with "multiple declarations"
 #define CORE_CONVERSATION_H
 
 #include <string>
