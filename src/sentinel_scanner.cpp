@@ -1,49 +1,46 @@
-//Credit to Stack Overflow for resources for help while doing this project.
-
-
-
 
 #include "core/sentinel_scanner.h"
 
-SentinelScanner::SentinelScanner(std::string sentinel) 
-    : sentinel_(std::move(sentinel)) {}
+SentinelScanner::SentinelScanner(std::string sentinel) : sentinel_(std::move(sentinel)) {} //base constructor
 
-SentinelScanner::Out SentinelScanner::feed(std::string_view chunk) {
-    Out result;
-    result.sentinel_found = false;
+SentinelScanner::Out SentinelScanner::feed(std::string_view chunk)
+{
+    Out res;
+    res.sentinel_found = false;
     
-    //add new chunk to pending_
-    pending_ += chunk;
+    pending_ += chunk; //append the incoming chunk to the data already pending
+    std::size_t foundPosition = pending_.find(sentinel_); //find the sentinel in the total text
     
-    //find location of sentinel if it is there
-    std::size_t found_pos = pending_.find(sentinel_);
-    
-    if (found_pos != std::string::npos) {
-        //if sentinel is found, everything before is good
-        result.safe_text = pending_.substr(0, found_pos);
-        result.sentinel_found = true;
+    if (foundPosition != std::string::npos) //if the sentinel was found (std::string::npos is returned by find if search failed)
+    {
+        res.safe_text = pending_.substr(0, foundPosition); //clear the pending
+        res.sentinel_found = true;
         pending_.clear(); 
-    } else {
-        // if sentinel is not found, hold back the maximum possible match length
-        std::size_t max_hold_back = sentinel_.size() - 1;
+    } 
+    else 
+    {
+        //std::size_t maxHoldBack = sentinel_.size() - 1;
+        std::size_t maxHoldBack = sentinel_.size() - 1; //if sentinel not found, retain an amount equal to the largest partial match length
         
-        if (pending_.size() > max_hold_back) {
-            std::size_t safe_length = pending_.size() - max_hold_back;
-            result.safe_text = pending_.substr(0, safe_length);
-            //keep only trailing chars
-            pending_ = pending_.substr(safe_length);
+        if (pending_.size() > maxHoldBack) 
+        {
+            std::size_t safeLength = pending_.size() - maxHoldBack;
+            res.safe_text = pending_.substr(0, safeLength);
+            pending_ = pending_.substr(safeLength); //making sure that we didnt cut of part of the sentinel
         }
-        //if pending is less than the limit at max_hold_back, safe_text is still empty
     }
     
-    return result;
+    return res;
 }
 
-SentinelScanner::Out SentinelScanner::flush() {
-    //release any text left after everything else is done
-    Out result;
-    result.safe_text = pending_;
-    result.sentinel_found = false;
+SentinelScanner::Out SentinelScanner::flush() //release data remaining in pending_
+{
+    Out res;
+
+    res.safe_text = pending_;
     pending_.clear();
-    return result;
+
+    res.sentinel_found = false;
+
+    return res;
 }
