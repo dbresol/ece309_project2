@@ -160,7 +160,7 @@ int main() {
 
 
 
-    // tests for harness integration. i have no idea why there are red underline errors down here... but it complies fine
+    // tests for harness integration. in visual studio there are underlines down here... but it complies fine
     // case 10: harness turn limit
     HarnessConfig cfg1;
     cfg1.max_turns = 3; 
@@ -200,15 +200,9 @@ int main() {
     assert(reply3.role() == Role::Assistant);
     assert(reply3.content() == "Hi! What can I do for you today?" && "Round trip playback failed");
     
-    std::remove(filename3.c_str()); // Clean up
+    std::remove(filename3.c_str()); // clean up
 
-
-// ============================================================================
-// Main Test Runner
-// ============================================================================
-
-
-
+    // if it reaches this point, it works!!!!!!!!!!
     
     std::cout << "All 12 tests passed successfully!\n";
     return 0;
