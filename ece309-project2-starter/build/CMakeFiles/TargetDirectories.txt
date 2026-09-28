@@ -1,0 +1,4 @@
+/home/daniel/Downloads/ece309-project2-starter/build/CMakeFiles/miniharness.dir
+/home/daniel/Downloads/ece309-project2-starter/build/CMakeFiles/test_p2.dir
+/home/daniel/Downloads/ece309-project2-starter/build/CMakeFiles/edit_cache.dir
+/home/daniel/Downloads/ece309-project2-starter/build/CMakeFiles/rebuild_cache.dir
