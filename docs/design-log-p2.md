@@ -1,6 +1,6 @@
 ## Growth factor and amortized cost
 For the conversation class, I implemented a dynamic array which had a growth factor of 2, which meant that it doubled in size every time it had to grow. Appending to an array at full capacity, where size_ == capacity_, a new array of double the size is allocated, and the existing elements are afterwards able to be copied over before the element is appended.
-	I believe that this has an amortized insertion cost of O(N) because the cost of inserting an element is the cost of the actual insertion, which is equal to one, plus the cost of copying existing elements for each resize triggered, which happens at capacities 1, 2, 4, 8, so on and so forth.
+	I believe that this has an amortized insertion cost of O(N) because the cost of inserting an element is the cost of the actual insertion, which is equal to one, plus the cost of copying existing elements for each resize triggered, which happens at capacities 1, 2, 4, 8, so on and so forth, with complexity O(N) for the doubling operation.
 To insert N elements, the program performs N basic insertions and N- 1 copy operations. The formula for the total operation cost is 2N - 1, which has a complexity of O(N). However, the best-case complexity is O(1) for the times when there is no resizing necessary, making me somewhat unsure of the true answer.
 
 ## Rule of Five evidence
@@ -14,5 +14,5 @@ To work at O(N) complexity for the chunks, the scanner's pending_ buffer holds a
 
 ## What I would change differently
 For starters, I would start working on the project earlier! I would also plan more so that I can keep track of what the status is on the project at any given time. But concerning the code itself, if I were to rewrite this project, I would probably change the method of initialization in the Conversation class. Currently, the default constructor initialize capacity_ to 0 and data_ to nullptr. While this is mostly fine for completely empty conversations, it guarantees an immediate reallocation on the first append operation.
-	Pre-allocating a small default capacity, such as 4 or 8, in the default constructor would be marginally better. Paying a tiny and fixed memory cost upfront would eliminate the overhead of the initial 0-to-1 and 1-to-2 capacity jumps. At the same time, I think that this is really just splitting hairs, so I would be interested to see a situation where this is critical.
+	Pre-allocating a small default capacity, such as 4 or 8, in the default constructor would be marginally better. Paying a tiny and fixed memory cost upfront would eliminate the overhead of the initial 0-to-1 and 1-to-2 capacity jumps.
 	Finally, if I could change the header files, I would add a method to get capacity_ from a conversation object. This would have helped a lot for test case 7.
