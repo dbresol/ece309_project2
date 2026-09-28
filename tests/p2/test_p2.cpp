@@ -22,7 +22,7 @@
 #include <fstream>
 
 
-
+//Credit to Stack Overflow for resources for help with some stuff. Wow!
 //mock classes for harness integration
 class MockInput : public InputSource {
     int current_turn = 0;
@@ -58,6 +58,7 @@ int main() {
 
     //test 1: empty conversion bounds
     Conversation conv1;
+    //Conversation conv;
     assert(conv1.size() == 0);
     assert(conv1.begin() == conv1.end());
     
@@ -147,7 +148,8 @@ int main() {
     std::size_t max_held = sentinel9.size() - 1;
     
     std::string emitted9 = "";
-    for (int i = 0; i < 1000; ++i) {
+    // 100000 * 8 is 8 megabytes... that's a lot, but it needs to be done!
+    for (int i = 0; i < 1000000; ++i) {
         auto out9 = scanner9.feed("A");
         emitted9 += out9.safe_text;
         
